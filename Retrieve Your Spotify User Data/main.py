@@ -1,15 +1,16 @@
-import sqlalchemy
-import pandas as pd
-from sqlalchemy.orm import sessionmaker
-import requests
+import datetime
 import json
-from datetime import datetime
-import datetime 
 import sqlite3
+from datetime import datetime
+
+import pandas as pd
+import requests
+import sqlalchemy
+from sqlalchemy.orm import sessionmaker
 
 DATABASE_LOCATION = "sqlite://my_played_tracks.sqlite"
 USER_ID = "22hkkqxsnuncuzcgmwimr5mma"
-TOKEN = "BQAlikcFA1Cl2mG-NPQYRFZ7Oavprwa1hiueQHJIIv2ZjhezKF9fwR7RWYIv6FVhVAf8vlAxUYRecf7vnz_tM3juIG8yZGFL8c6mcYTAXL4QtLjSaspbE89nnyPUxGvQBmoT_emg4G-X9oc946DHs9Q1c0iv0nOaQyR9axOAj4ueBVXf3jAEF18"
+TOKEN = "BQD4JV-QS4XE2LAjoKeXCS5ceeN7q2982UwR7E8D7ENT0EQ8iZ_h1O5avoGflSVUSbjRARA8Ido3ijxCJ3TM6L0bbGzDhbrtzct62_wrUv-gSYdzAv14gVPLDzcnvXEk1_hP8JQXrC0H6x97qNKwD8c7F9FVN4p8GqsAq4NKGan_zJpGzxnCcI1wrijz58UDRpHRTQfdrcCe"
 if __name__ == "__main__":
     headers = {
         "Accept" :  "application/json",
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     req = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}".format(time=yesterday_unix_timestamp), headers = headers)
     data = req.json()
     print(data)
-
+    
     song_name = []
     artist_names = []
     played_at = []
@@ -37,8 +38,6 @@ if __name__ == "__main__":
         artist_names.append(song["track"]["album"]["artists"][0]["name"])
         available_markets.append(song["track"]["available_markets"])
         release_date.append(song["track"]["name"])
-
-
 
     song_dict = {
         "song_name" : song_name,
