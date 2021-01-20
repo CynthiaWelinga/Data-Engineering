@@ -9,7 +9,7 @@ import sqlite3
 
 DATABASE_LOCATION = "sqlite://my_played_tracks.sqlite"
 USER_ID = "22hkkqxsnuncuzcgmwimr5mma"
-TOKEN = "BQCM_Fnc2NScw2uAJ3XyWL83IJSgTf3C5ExZRrV2Iidc53jB5FFyOs4AdwC1ml9c0uacywvGsEk3GCRWTGq5SA23Q7Oo3h7aD68irrEGdUC7bkp8_TjYMH-K-6_AqUPJ6u5er3CKYr2PFkptRbgnB23nU4YKOtZ2wG64CclS3k52QCKMsd-BLeA"
+TOKEN = "BQAlikcFA1Cl2mG-NPQYRFZ7Oavprwa1hiueQHJIIv2ZjhezKF9fwR7RWYIv6FVhVAf8vlAxUYRecf7vnz_tM3juIG8yZGFL8c6mcYTAXL4QtLjSaspbE89nnyPUxGvQBmoT_emg4G-X9oc946DHs9Q1c0iv0nOaQyR9axOAj4ueBVXf3jAEF18"
 if __name__ == "__main__":
     headers = {
         "Accept" :  "application/json",
@@ -23,8 +23,7 @@ if __name__ == "__main__":
 
     req = requests.get("https://api.spotify.com/v1/me/player/recently-played?after={time}".format(time=yesterday_unix_timestamp), headers = headers)
     data = req.json()
-    #data = requests.get(url).json()
-    # print(data)
+    print(data)
 
     song_name = []
     artist_names = []
@@ -37,16 +36,18 @@ if __name__ == "__main__":
         song_name.append(song["track"]["name"])
         artist_names.append(song["track"]["album"]["artists"][0]["name"])
         available_markets.append(song["track"]["available_markets"])
-        #release_date.append(song["track"]["release_date"])
+        release_date.append(song["track"]["name"])
+
+
 
     song_dict = {
         "song_name" : song_name,
         "artist_names" : artist_names,
-        #"release_date" : release_date,
+        "release_date" : release_date,
         "available_markets" : available_markets
     }
 
 
-    song_df = pd.DataFrame(song_dict, columns = ["song_name", "artist_names", "available_markets" ])
+    song_df = pd.DataFrame(song_dict, columns = ["song_name", "artist_names", "available_markets", "release_date"])
     
     print(song_df)
