@@ -8,9 +8,10 @@ import requests
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
-DATABASE_LOCATION = "sqlite://my_played_tracks.sqlite"
-USER_ID = # Spotify Username
-TOKEN = # Spotify generated token from https://developer.spotify.com/console/get-recently-played/
+DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
+USER_ID = "22hkkqxsnuncuzcgmwimr5mma"
+TOKEN = "BQB8lxpAZsR8rVBZ-zKJwpTkDu0ozjsimhv4TsORhsWtfOURAQMT_ZZRPs3T5qgf9HkvbkJS3h4rMsle4_6d9aKYCQwdFyw-kBjtcBsfhPNUVDC-IKAbmVFl13yBYgDI9qgOildj2J6izC4lERQrkbygw2gXwWboInlUESR2RMsggu9_IquEtMqY6DtazjD4lLJq8kBP8Xu9"
+
 
 # ETL Transform (Validation)
 def check_if_valid_data(df: pd.DataFrame) -> bool:
@@ -54,6 +55,7 @@ if __name__ == "__main__":
     played_at = []
     release_date = []
     available_markets = []
+    
 
     # Extract the data you want from the json object
     for song in data["items"]:
@@ -75,11 +77,40 @@ if __name__ == "__main__":
     # Return the data in a pandas dataframe
     song_df = pd.DataFrame(song_dict, columns = ["song_name", "artist_names", "available_markets", "release_date", "played_at"])
     
+    #print(song_df)
+
+
     # Validate
     if check_if_valid_data(song_df):
-        print(".........................................................................")
-        print(".........................................................................")
-        print(".................... Data valid...proceed to Load stage..................")
-        print(".........................................................................")
-        print(".........................................................................")
-        
+        print("\n.................... Data valid...proceed to Load Stage ..................\n")
+
+    # ETL Load
+    # Create engine, pass db location
+    engine = sqlalchemy.create_engine(DATABASE_LOCATION) 
+    # Initiate connection
+    conn = sqlite3.connect('my_played_tracks.sqlite') 
+    # Pointer to specific rows
+    cursor = conn.cursor() 
+
+    query = """
+    CREATE TABLE IF NOT EXISTS my_played_tracks(
+        song_name VARCHAR(200),
+        artist_name VARCHAR(200),
+        played_at VARCHAR(200),
+        timestamp VARCHAR(200),
+        CONSTRAINT primary_key_constraint PRIMARY KEY (played_at)
+    )
+    """
+    
+    # Create table
+    cursor.execute(query)
+    print("\n.................... Opened database successfully .......................\n")
+
+    # Populate table
+    try:
+        song_df.to_sql("my_played_tracks", engine, index=False, if_exists='append')
+    except:
+        print("\n.................... Data already exists in the database ................\n")
+
+    conn.close()
+    print("\n.................... Close database successfully ........................\n")
