@@ -9,9 +9,8 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 
 DATABASE_LOCATION = "sqlite:///my_played_tracks.sqlite"
-USER_ID = "22hkkqxsnuncuzcgmwimr5mma"
-TOKEN = "BQB8lxpAZsR8rVBZ-zKJwpTkDu0ozjsimhv4TsORhsWtfOURAQMT_ZZRPs3T5qgf9HkvbkJS3h4rMsle4_6d9aKYCQwdFyw-kBjtcBsfhPNUVDC-IKAbmVFl13yBYgDI9qgOildj2J6izC4lERQrkbygw2gXwWboInlUESR2RMsggu9_IquEtMqY6DtazjD4lLJq8kBP8Xu9"
-
+USER_ID = # Spotify Username
+TOKEN = # Spotify generated token from https://developer.spotify.com/console/get-recently-played/
 
 # ETL Transform (Validation)
 def check_if_valid_data(df: pd.DataFrame) -> bool:
