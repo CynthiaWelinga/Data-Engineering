@@ -55,7 +55,6 @@ if __name__ == "__main__":
     release_date = []
     available_markets = []
     
-
     # Extract the data you want from the json object
     for song in data["items"]:
         song_name.append(song["track"]["name"])
