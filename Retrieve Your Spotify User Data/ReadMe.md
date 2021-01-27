@@ -1,5 +1,6 @@
 # Extract
-
+Variables:
+  - 
 # Transform
 
 # Load
