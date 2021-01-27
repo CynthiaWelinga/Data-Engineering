@@ -1,7 +1,7 @@
 # Extract
 Variables:
   - USER_ID: <your Spotify UserId>
-  - TOKEN: Generate this from https://developer.spotify.com/console/get-recently-played/?limit=50&after=&before=
+  - TOKEN: Generate this from <a href="https://developer.spotify.com/console/get-recently-played/?limit=50&after=&before=">here</a> 
 # Transform
 
 # Load
