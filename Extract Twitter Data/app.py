@@ -22,52 +22,40 @@ try:
 except:
     print("Error during authentication")
 
-# Check for latest 100 tweets with hashtag python or orskl
-tweets = api.search(q="International Women's Day", lang="en", rpp=100)
+# Extract latest 100 tweets with hashtag Women's History Month
+tweets = api.search(q="Women's History Month", lang="en", rpp=100)
 for tweet in tweets:
     USER = tweet.user.name
-    RETWEETS = tweet.retweet_count
-    CREATED = tweet.created_at
     TEXT = tweet.text
+    RETWEETS = str(tweet.retweet_count)
+    LOCATION = tweet.geo
+    LANGUAGE = tweet.lang
+    CREATED = str(tweet.created_at)
     SOURCE = tweet.source
-    print(USER + " | " + TEXT + " | " + str(CREATED) + " | " + str(RETWEETS) + " | " + SOURCE)
+    print(USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE)
 
-
-# Create a class that listens streaming tweets with hashtag python or orskl
-# Refer to https://docs.python.org/3/tutorial/classes.html for details on Python classes
+# Create a class that listens streaming tweets with hashtag Women's History Month", "#WHM", "Women in history", "WomenInTechHistory
 
 class Tweet_Stream(tweepy.StreamListener):
-    # Class inheritance as we discussed in Track 1 Intro session
-    # Inherting tweepy.StreamListener class in to OrSklStream class
-    # More info on inheritances - https://docs.python.org/3/tutorial/classes.html#inheritance
-
+    # Inherting tweepy.StreamListener class in to Tweet_Stream class
     def __init__(self, passed_api):
         self.api = passed_api
         self.me = api.me()
 
-    # Lets transform the data and store them in flat file
+    # Extract, Transform & Loadt the data into a flatfile
     def on_status(self, tweet):
         USER = tweet.user.name
+        TEXT = tweet.text
         RETWEETS = tweet.retweet_count
         CREATED = tweet.created_at
-        TEXT = tweet.text
         SOURCE = tweet.source
-        #print(USER + " | " + TEXT + " | " + str(CREATED) + " | " + str(RETWEETS) + " | " + SOURCE)
-        tfile = open("C:/Users/cynthiajuma/Desktop\PROGRAMMING/DATA_ENGINEERING/Twitter_Project/tweets_extract.csv", "a")
-        output = USER + " | " + TEXT + " | " + str(CREATED) + " | " + str(RETWEETS) + " | " + SOURCE + '\n'
-        tfile.write(output)
+        tfile = open("C:/Users/cynthiajuma/Desktop\PROGRAMMING/DATA_ENGINEERING/Twitter_Project/tweets_extract.csv", "a", encoding="utf-8")
+        output = USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE, "\n"
+        tfile.write(str(output))
         tfile.close()
 
 
-# Let this run in PyCharm and test
+# Run the background and observe updates in tfile. You can make a tweet with these hashtags to verify
 tweets_listener = Tweet_Stream(api)
 stream = tweepy.Stream(api.auth, tweets_listener)
-stream.filter(track=["Python", "Orskl"], languages=["en"])
-
-# Run the code in the background and verify data flowing in
-
-# Post a tweet and verify if it is available in the flat file on your local
-
-# Exercise
-# Record all the tweets for hashtag #machineLearning between 1-Jan-2020 and today
-# Extract all the URL's from all the tweets above
+stream.filter(track=["Women's History Month", "#WHM", "Women in history", "WomenInTechHistory"], languages=["en"])
