@@ -32,10 +32,9 @@ for tweet in tweets:
     LANGUAGE = tweet.lang
     CREATED = str(tweet.created_at)
     SOURCE = tweet.source
-    print(USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE)
+    print(USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE, "\n")
 
 # Create a class that listens streaming tweets with hashtag Women's History Month", "#WHM", "Women in history", "WomenInTechHistory
-
 class Tweet_Stream(tweepy.StreamListener):
     # Inherting tweepy.StreamListener class in to Tweet_Stream class
     def __init__(self, passed_api):
@@ -50,7 +49,7 @@ class Tweet_Stream(tweepy.StreamListener):
         CREATED = tweet.created_at
         SOURCE = tweet.source
         tfile = open("C:/Users/cynthiajuma/Desktop\PROGRAMMING/DATA_ENGINEERING/Twitter_Project/tweets_extract.csv", "a", encoding="utf-8")
-        output = USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE, "\n"
+        output = (USER, " | ", TEXT, " | ", RETWEETS, " | ", LOCATION, " | ", LANGUAGE, " | ", CREATED, " | ", SOURCE, "\n")
         tfile.write(str(output))
         tfile.close()
 
