@@ -1,40 +1,40 @@
 # KEYWORDS
 
-### select
+## select
 
-### where
+## where
 
-### like
+## like
 
 - using wildcards: _____(exact amount of characters), %TEXT%(with that substring)
 
-### and & or
+## and & or
 
 - all or either one respectively
 
-### in & not in
+## in & not in
 
 - Check for all that are in parentheses and check for all that are not in parentheses
 
-### distinct
+## distinct
 
 `SELECT DISTINCT nationality FROM characters;`
 
-### order By
+## order By
 
 `SELECT *[COLUMNS] FROM characters ORDER BY height DESC;`
 
-### Case statements
+## Case statements
 
 - create a new variable and set the values based on a series of conditions being met
 
 `SELECT name, CASE WHEN species = 'Human' THEN 'HUMAN' ELSE 'ALIEN' END FROM characters;`
 
-### Limit
+## Limit
 
 `SELECT * FROM characters ORDER BY height ASC LIMIT 1;`
 
-### count, avg, max, min
+## count, avg, max, min
 
 - sum: use it to add up all of the values in a particular column
 
@@ -55,7 +55,7 @@
 
     `SELECT MIN(budget), MAX(budget) FROM movies;`
 
-### group by
+## group by
 - split our data up into smaller segments to allow greater comparison
 
     `SELECT nationality, COUNT(*) FROM characters GROUP BY nationality;`
@@ -64,7 +64,7 @@
 
     `SELECT nationality, COUNT(*) FROM characters GROUP BY nationality HAVING COUNT(id) > 1;`
 
-### is null & is not null
+## is null & is not null
 
 `SELECT * FROM characters WHERE alter_ego IS NOT NULL;`
 
